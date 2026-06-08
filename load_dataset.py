@@ -11,7 +11,6 @@ via FUSEKI_USER / FUSEKI_PASSWORD env vars if you change the compose file.
 
 import os
 import sys
-
 import requests
 
 FUSEKI_DATA_URL = "http://localhost:3030/recipes/data"
@@ -27,11 +26,19 @@ def main():
     HTTP Basic Auth (FUSEKI_USER, FUSEKI_PASSWORD), and raises a non-zero
     exit on any non-2xx response.
     """
-    # TODO: open TTL_FILE in binary mode and POST its bytes to FUSEKI_DATA_URL
-    # TODO: include the header Content-Type: text/turtle
-    # TODO: include HTTP Basic Auth — auth=(FUSEKI_USER, FUSEKI_PASSWORD)
-    # TODO: raise on non-2xx (response.raise_for_status())
-    raise NotImplementedError("Complete the POST in load_dataset.main")
+    # فتح ملف TTL في وضع القراءة الثنائية (binary mode)
+    with open(TTL_FILE, 'rb') as f:
+        # إرسال طلب POST مع البيانات ورؤوس الطلب (headers) والمصادقة (auth)
+        response = requests.post(
+            FUSEKI_DATA_URL,
+            data=f,
+            headers={'Content-Type': 'text/turtle'},
+            auth=(FUSEKI_USER, FUSEKI_PASSWORD)
+        )
+    
+    # رفع استثناء في حال كانت الاستجابة غير ناجحة (non-2xx)
+    response.raise_for_status()
+    print(f"Successfully uploaded {TTL_FILE} to {FUSEKI_DATA_URL}")
 
 
 if __name__ == "__main__":

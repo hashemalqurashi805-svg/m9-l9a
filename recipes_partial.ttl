@@ -1,11 +1,10 @@
-@prefix :     <http://aispire.example.org/recipes/> .
+@prefix :      <http://aispire.example.org/recipes/> .
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
-# ---- Cuisine classes (SKOS-labeled) ----
-
+# ---- Cuisine classes ----
 :Italian a :Cuisine ;
     skos:prefLabel "Italian" ;
     skos:altLabel  "italiano" .
@@ -14,13 +13,15 @@
     skos:prefLabel "Thai" ;
     skos:altLabel  "ไทย" .
 
-# TODO: add at least one more cuisine class with skos:prefLabel + skos:altLabel
-# so the 10 recipes you add can use a third cuisine. For Q2 in queries.py to
-# exercise the altLabel path, at least one recipe must use a cuisine whose
-# label only matches via skos:altLabel.
+:French a :Cuisine ;
+    skos:prefLabel "French" ;
+    skos:altLabel  "français" .
 
-# ---- Ingredient classes (SKOS-labeled) ----
+# Hierarchical relations (Challenge Level 1)
+:Italian rdfs:subClassOf :European .
+:French rdfs:subClassOf :European .
 
+# ---- Ingredient classes ----
 :eggplant a :Ingredient ;
     skos:prefLabel "eggplant" ;
     skos:altLabel  "aubergine" .
@@ -34,50 +35,24 @@
     skos:altLabel  "chile" .
 
 # ---- Authors ----
-
 :authorAlice a :Author ; :name "Alice Romano" .
 :authorBruno a :Author ; :name "Bruno Tanaka" .
+:authorChloe a :Author ; :name "Chloe Dubois" .
+:authorDavid a :Author ; :name "David Smith" .
 
-# TODO: add a few more :Author resources for your recipes to reference.
-
-# ---- Recipes (5 pre-filled; extend to 15) ----
-
-:recipe001 a :Recipe ;
-    :name              "Eggplant Parmigiana" ;
-    :cuisine           :Italian ;
-    :primaryIngredient :eggplant ;
-    :author            :authorAlice ;
-    :year              2018 .
-
-:recipe002 a :Recipe ;
-    :name              "Basil Pesto Pasta" ;
-    :cuisine           :Italian ;
-    :primaryIngredient :basil ;
-    :author            :authorAlice ;
-    :year              2021 .
-
-:recipe003 a :Recipe ;
-    :name              "Thai Basil Stir Fry" ;
-    :cuisine           :Thai ;
-    :primaryIngredient :basil ;
-    :author            :authorBruno ;
-    :year              2022 .
-
-:recipe004 a :Recipe ;
-    :name              "Chili Garlic Noodles" ;
-    :cuisine           :Thai ;
-    :primaryIngredient :chili ;
-    :author            :authorBruno ;
-    :year              2019 .
-
-:recipe005 a :Recipe ;
-    :name              "Eggplant Curry" ;
-    :cuisine           :Thai ;
-    :primaryIngredient :eggplant ;
-    :author            :authorBruno ;
-    :year              2023 .
-
-# TODO: add 10 more recipes (recipe006..recipe015) following the same pattern.
-# Use a mix of years from 2015 through 2024 so the post-2020 query (Q3) has
-# interesting boundaries. At least one recipe must use a cuisine whose label
-# match only succeeds via skos:altLabel — Q2's autograder verifies this.
+# ---- Recipes ----
+:recipe001 a :Recipe ; :name "Eggplant Parmigiana" ; :cuisine :Italian ; :primaryIngredient :eggplant ; :author :authorAlice ; :year 2018 .
+:recipe002 a :Recipe ; :name "Basil Pesto Pasta" ; :cuisine :Italian ; :primaryIngredient :basil ; :author :authorAlice ; :year 2021 .
+:recipe003 a :Recipe ; :name "Thai Basil Stir Fry" ; :cuisine :Thai ; :primaryIngredient :basil ; :author :authorBruno ; :year 2022 .
+:recipe004 a :Recipe ; :name "Chili Garlic Noodles" ; :cuisine :Thai ; :primaryIngredient :chili ; :author :authorBruno ; :year 2019 .
+:recipe005 a :Recipe ; :name "Eggplant Curry" ; :cuisine :Thai ; :primaryIngredient :eggplant ; :author :authorBruno ; :year 2023 .
+:recipe006 a :Recipe ; :name "Ratatouille" ; :cuisine :French ; :primaryIngredient :eggplant ; :author :authorChloe ; :year 2021 .
+:recipe007 a :Recipe ; :name "French Onion Soup" ; :cuisine :French ; :primaryIngredient :basil ; :author :authorChloe ; :year 2020 .
+:recipe008 a :Recipe ; :name "Pasta Arrabbiata" ; :cuisine :Italian ; :primaryIngredient :chili ; :author :authorAlice ; :year 2024 .
+:recipe009 a :Recipe ; :name "Spicy Thai Salad" ; :cuisine :Thai ; :primaryIngredient :chili ; :author :authorBruno ; :year 2017 .
+:recipe010 a :Recipe ; :name "Eggplant Gratin" ; :cuisine :French ; :primaryIngredient :eggplant ; :author :authorChloe ; :year 2022 .
+:recipe011 a :Recipe ; :name "Margherita Pizza" ; :cuisine :Italian ; :primaryIngredient :basil ; :author :authorAlice ; :year 2015 .
+:recipe012 a :Recipe ; :name "Thai Chili Paste" ; :cuisine :Thai ; :primaryIngredient :chili ; :author :authorBruno ; :year 2023 .
+:recipe013 a :Recipe ; :name "French Basil Sauce" ; :cuisine :French ; :primaryIngredient :basil ; :author :authorDavid ; :year 2019 .
+:recipe014 a :Recipe ; :name "Italian Eggplant Bake" ; :cuisine :Italian ; :primaryIngredient :eggplant ; :author :authorAlice ; :year 2024 .
+:recipe015 a :Recipe ; :name "Spicy French Ratatouille" ; :cuisine :French ; :primaryIngredient :eggplant ; :author :authorDavid ; :year 2020 .
